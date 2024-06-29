@@ -1,5 +1,6 @@
 import pytest
 
+from unittest.mock import Mock
 from praktikum.ingredient import Ingredient
 from praktikum.burger import Burger
 from tests import data
@@ -7,10 +8,13 @@ from tests import data
 
 class TestBurger:
 
+    # ћоки тут особо ни к чему, но задание того требует
     def test_set_buns_positive(self):
+        mock_bun = Mock()
+        mock_bun.name = 'Mock Bun'
         burger = Burger()
-        burger.set_buns(data.correct_bun)
-        assert burger.bun.name == data.correct_bun.get_name()
+        burger.set_buns(mock_bun)
+        assert burger.bun.name == mock_bun.name
 
     @pytest.mark.parametrize('ingredient', data.correct_ingredients)
     def test_add_ingredient_positive(self, ingredient):
@@ -29,7 +33,6 @@ class TestBurger:
         burger = Burger()
         burger.ingredients = data.correct_ingredients.copy()
         burger.move_ingredient(1, 0)
-        print(burger.ingredients[0].name)
         assert burger.ingredients[0] == data.correct_ingredients[1]
 
     def test_get_price_positive(self):
